@@ -1,0 +1,1 @@
+export {forgotPasswordRoute} from "./forgot-password.route";
