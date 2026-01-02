@@ -1,4 +1,4 @@
-import {appPaths} from "../../routing/routing.model";
+import {appPaths} from "../../../../core/routing/routing.model";
 
 export const mainRoute = {
   path: appPaths.main,

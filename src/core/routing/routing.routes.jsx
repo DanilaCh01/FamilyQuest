@@ -1,12 +1,26 @@
 import { createBrowserRouter } from "react-router-dom";
-import { mainRoute } from "../pages/main";
-import { signInRoute } from "../pages/auth/sign-in";
-import { signUpRoute } from "../pages/auth/sign-up";
-import { forgotPasswordRoute } from "../pages/auth/forgot-password";
+import { App } from "../app/app.component";
+import { AuthLayout } from "../app/layouts/auth/auth.layout";
+import { mainRoute } from "../../features/main/pages/main";
+import { signInRoute } from "../../features/auth/pages/sign-in";
+import { signUpRoute } from "../../features/auth/pages/sign-up";
+import { forgotPasswordRoute } from "../../features/auth/pages/forgot-password";
 
 export const router = createBrowserRouter([
-  mainRoute,
-  signInRoute,
-  signUpRoute,
-  forgotPasswordRoute,
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      mainRoute,
+    ],
+  },
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      signInRoute,
+      signUpRoute,
+      forgotPasswordRoute,
+    ],
+  },
 ]);
