@@ -5,7 +5,7 @@ export const App = () => {
     <div style={{ fontFamily: 'sans-serif' }}>
       <header style={{ 
         padding: '1rem 2rem', 
-        backgroundColor: '#1f2937', 
+        backgroundColor: 'var(--color-blue-700)', 
         color: 'white', 
         display: 'flex', 
         justifyContent: 'space-between' 
