@@ -1,14 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Input } from "../../../../shared/components/input";
 import { Label } from "../../../../shared/components/label";
 import { Button } from "../../../../shared/components/button";
+import { appPaths } from "../../../../core/routing/routing.model";
 
 export const SignUpPage = () => {
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
+    email: "user@example.com",
+    password: "securePassword123",
+    confirmPassword: "securePassword123",
   });
 
   const handleChange = (event) => {
@@ -19,19 +22,56 @@ export const SignUpPage = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    
-    console.log("Дані SignUp (Controlled):", formData);
+    setError("");
     
     if (formData.password !== formData.confirmPassword) {
       setError("Паролі не співпадають!");
       return;
     }
+
+    console.log("Дані SignUp (Controlled):", formData);
+
+    try {
+      const response = await fetch("https://study-api-volkov-lab-566b7077.koyeb.app/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("token", data.token);
+        console.log("Користувач успішно зареєстрований!");
+
+        navigate("/user"); 
+        return;
+      }
+
+      if (response.status === 400) {
+        setError("Некоректні дані. Спробуйте ще раз.");
+        return;
+      }
+
+      if (response.status === 409) {
+        setError("Користувач з таким email вже існує.");
+        return;
+      }
+    }
+
+      catch (error) {
+        setError("Помилка мережі. Спробуйте ще раз.", error);
+        console.log(error)
+      }
   };
-
-  const [error, setError] = useState("");
-
+  
   return (
     <div className="w-full max-w-sm">
       <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Створити акаунт</h2>
