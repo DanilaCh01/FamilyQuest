@@ -1,1 +1,1 @@
-export { mainRoute } from "./main.route";
+export { mainRoute } from './main.route';

@@ -1,1 +1,1 @@
-export {signUpRoute} from "./sign-up.route";
+export { signUpRoute } from './sign-up.route';

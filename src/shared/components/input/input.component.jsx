@@ -1,16 +1,15 @@
 export const Input = ({ type, name, value, required, onChange, placeholder }) => {
-    
   const getPlaceholder = () => {
     if (placeholder) return placeholder;
     switch (type) {
-        case "email":
-            return "example@gmail.com";
-        
-        case "password":
-            return "·········";
-        
-        default:
-            return "Введіть дані";
+      case 'email':
+        return 'example@gmail.com';
+
+      case 'password':
+        return '·········';
+
+      default:
+        return 'Введіть дані';
     }
   };
 

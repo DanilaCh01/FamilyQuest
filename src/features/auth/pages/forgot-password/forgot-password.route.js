@@ -1,9 +1,9 @@
-import {appPaths} from "../../../../core/routing/routing.model";
+import { appPaths } from '../../../../core/routing/routing.model';
 
 export const forgotPasswordRoute = {
   path: appPaths.forgotPassword,
   lazy: async () => {
-    const { ForgotPasswordPage } = await import("./forgot-password.page");
+    const { ForgotPasswordPage } = await import('./forgot-password.page');
     return { Component: ForgotPasswordPage };
   },
 };
