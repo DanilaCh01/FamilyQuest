@@ -1,8 +1,15 @@
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom'; // add UseNavigate
 import { appPaths } from '../routing/routing.model';
 
 export const App = () => {
+  // const navigate = useNavigate();
   const token = localStorage.getItem('token');
+
+  // const handleLogout = () => {
+  //   localStorage.removeItem('token');
+  //   localStorage.removeItem('role');
+  //   navigate(`/auth/${appPaths.signIn}`);
+  // };
 
   return (
     <div style={{ fontFamily: 'sans-serif' }}>
@@ -15,7 +22,9 @@ export const App = () => {
           justifyContent: 'space-between',
         }}
       >
-        <strong>FamilyQuest</strong>
+        <strong>
+          <Link to={`${appPaths.main}`}>FamilyQuest</Link>
+        </strong>
         <nav style={{ display: 'flex', gap: '1rem' }}>
           {!token ? (
             <Link to={`/auth/${appPaths.signIn}`} style={{ color: 'white' }}>
@@ -50,6 +59,8 @@ export const App = () => {
       </header>
 
       <main style={{ padding: '2rem' }}>
+        {' '}
+        {/* style={{ padding: '2rem' }} накладається один на одного */}
         <Outlet />
       </main>
     </div>

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Input } from '../../../../shared/components/input';
 import { Label } from '../../../../shared/components/label';
 import { Button } from '../../../../shared/components/button';
@@ -13,19 +13,6 @@ export const SignUpPage = () => {
     password: '',
     confirmPassword: '',
   });
-
-  useEffect(() => {
-    console.log('SignUpPage mounted');
-
-    const token = localStorage.getItem('token');
-    if (token) {
-      navigate(appPaths.user);
-    }
-
-    return () => {
-      console.log('SignUpPage unmounted');
-    };
-  }, [navigate]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -66,6 +53,7 @@ export const SignUpPage = () => {
 
       if (response.ok) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('role', data.role);
         console.log('Користувач успішно зареєстрований!');
 
         navigate(appPaths.user);

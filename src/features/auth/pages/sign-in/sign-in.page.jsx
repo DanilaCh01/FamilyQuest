@@ -1,6 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import { Input } from '../../../../shared/components/input';
 import { Label } from '../../../../shared/components/label';
 import { Button } from '../../../../shared/components/button';
@@ -12,20 +11,8 @@ export const SignInPage = () => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
+    role: 'parent',
   });
-
-  useEffect(() => {
-    console.log('SignInPage mounted');
-
-    const token = localStorage.getItem('token');
-    if (token) {
-      navigate(appPaths.user);
-    }
-
-    return () => {
-      console.log('SignInPage unmounted');
-    };
-  }, [navigate]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -51,6 +38,7 @@ export const SignInPage = () => {
           body: JSON.stringify({
             email: credentials.email,
             password: credentials.password,
+            role: credentials.role,
           }),
         },
       );
@@ -59,11 +47,12 @@ export const SignInPage = () => {
 
       if (response.ok) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('role', data.role);
         navigate(appPaths.user);
       } else if (response.status === 400) {
-        setError('Невірний запит. Перевірте введені дані.'); // Перевірити значення помилок які повертає API, коли API запрацює
+        setError('Невірний запит. Перевірте введені дані.');
       } else if (response.status === 401) {
-        setError('Невірний email або пароль.'); // Перевірити значення помилок які повертає API, коли API запрацює
+        setError('Невірний email або пароль.');
       } else {
         setError('Щось пішло не так...');
       }
@@ -101,10 +90,29 @@ export const SignInPage = () => {
         </div>
         {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
+        <div>
+          <Label text="Хто ви?" />
+          <select
+            name="role"
+            value={credentials.role}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="parent">Батько/Мати</option>
+            <option value="child">Дитина</option>
+          </select>
+        </div>
+
         <Button text="Увійти" />
       </form>
 
       <div className="mt-6 text-center text-sm text-gray-600">
+        <Link
+          to={`/auth/${appPaths.forgotPassword}`}
+          className="block text-blue-800 mb-3 hover:underline font-medium"
+        >
+          Забули пароль?
+        </Link>
         {'Нема аккаунту? '}
         <Link to={`/auth/${appPaths.signUp}`} className="text-blue-600 hover:underline font-medium">
           Зареєструватися
