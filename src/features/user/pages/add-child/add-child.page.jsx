@@ -4,6 +4,8 @@ import { Input } from '../../../../shared/components/input';
 import { Label } from '../../../../shared/components/label';
 import { Button } from '../../../../shared/components/button';
 import { appPaths } from '../../../../core/routing/routing.model';
+import { request } from '../../../../core/api/api.utils.js';
+import { clearAuthData } from '../../../../core/utils/token.utils.js';
 
 export const AddChildPage = () => {
   const navigate = useNavigate();
@@ -29,41 +31,25 @@ export const AddChildPage = () => {
     }
 
     try {
-      const token = localStorage.getItem('token');
-
-      const response = await fetch(
-        'https://study-api-volkov-lab-566b7077.koyeb.app/api/users/children',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            email: formData.email,
-            password: formData.password,
-          }),
-        },
-      );
-
-      if (response.ok) {
+      await request('/users/children', 'POST', {
+        email: formData.email,
+        password: formData.password,
+      });
+      
         console.log('Дитину успішно додано!');
         navigate(appPaths.user);
-        return;
-      }
 
-      const data = await response.json();
-
-      if (response.status === 409) {
-        setError('Користувач з такою поштою вже існує.');
-      } else if (response.status === 400) {
-        setError('Некоректні дані. Перевірте формат пошти та вимоги до паролю.'); // Хоча поки що вимог до паролю немає. Залишив на майбутнє.
-      } else {
-        setError(data.message || 'Щось пішло не так...');
-      }
     } catch (err) {
-      console.error(err);
-      setError('Помилка мережі. Спробуйте пізніше.');
+      if (err.status === 409) {
+        setError('Користувач з такою поштою вже існує.');
+      } else if (err.status === 400) {
+        setError('Некоректні дані. Перевірте формат пошти та вимоги до паролю'); // Хоча поки що вимог до паролю немає. Залишив на майбутнє.
+      } else if (err.status === 401 || err.status === 403) {
+        clearAuthData();
+        navigate(`/auth/${appPaths.signIn}`);
+      } else {
+        setError('Помилка мережі або сервера. Спробуйте пізніше.');
+      }
     }
   };
 

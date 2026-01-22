@@ -1,15 +1,15 @@
-import { Outlet, Link } from 'react-router-dom'; // add UseNavigate
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { appPaths } from '../routing/routing.model';
+import { clearAuthData, getToken } from '../utils/token.utils';
 
 export const App = () => {
-  // const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const navigate = useNavigate();
+  const token = getToken();
 
-  // const handleLogout = () => {
-  //   localStorage.removeItem('token');
-  //   localStorage.removeItem('role');
-  //   navigate(`/auth/${appPaths.signIn}`);
-  // };
+  const handleLogout = () => {
+    clearAuthData();
+    navigate(`/auth/${appPaths.signIn}`);
+  };
 
   return (
     <div style={{ fontFamily: 'sans-serif' }}>
@@ -20,6 +20,7 @@ export const App = () => {
           color: 'white',
           display: 'flex',
           justifyContent: 'space-between',
+          alignItems: 'center',
         }}
       >
         <strong>
@@ -31,6 +32,7 @@ export const App = () => {
               Увійти
             </Link>
           ) : (
+            <>
             <Link
               to={appPaths.user}
               style={{
@@ -54,12 +56,27 @@ export const App = () => {
                 }}
               />
             </Link>
+
+            <button
+                onClick={handleLogout}
+                style={{
+                  background: 'transparent',
+                  border: '1px solid rgba(255, 255, 255, 0.5)',
+                  color: 'white',
+                  padding: '4px 12px',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                }}
+              >
+                Вийти
+              </button>
+              </>
           )}
         </nav>
       </header>
 
-      <main style={{ padding: '2rem' }}>
-        {' '}
+      <main>
         {/* style={{ padding: '2rem' }} накладається один на одного */}
         <Outlet />
       </main>

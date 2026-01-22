@@ -4,6 +4,8 @@ import { Input } from '../../../../shared/components/input';
 import { Label } from '../../../../shared/components/label';
 import { Button } from '../../../../shared/components/button';
 import { appPaths } from '../../../../core/routing/routing.model';
+import { request } from '../../../../core/api/api.utils.js';
+import { setToken, setRole } from '../../../../core/utils/token.utils.js';
 
 export const SignInPage = () => {
   const navigate = useNavigate();
@@ -28,37 +30,21 @@ export const SignInPage = () => {
     setError('');
 
     try {
-      const response = await fetch(
-        'https://study-api-volkov-lab-566b7077.koyeb.app/api/auth/login',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: credentials.email,
-            password: credentials.password,
-            role: credentials.role,
-          }),
-        },
-      );
+      const data = await request('/auth/login', 'POST', credentials);
 
-      const data = await response.json();
+        setToken(data.token);
+        setRole(credentials.role);
 
-      if (response.ok) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('role', data.role);
         navigate(appPaths.user);
-      } else if (response.status === 400) {
+    } catch (err) {
+      if (err.status === 400) {
         setError('Невірний запит. Перевірте введені дані.');
-      } else if (response.status === 401) {
+      } else if (err.status === 401) {
         setError('Невірний email або пароль.');
       } else {
-        setError('Щось пішло не так...');
+        console.error(err);
+        setError('Помилка мережі.');
       }
-    } catch (err) {
-      console.error(err);
-      setError('Помилка мережі.');
     }
   };
 
@@ -119,5 +105,5 @@ export const SignInPage = () => {
         </Link>
       </div>
     </div>
-  );
+  );  
 };

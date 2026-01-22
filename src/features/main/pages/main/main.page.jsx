@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { appPaths } from '../../../../core/routing/routing.model';
+import { getToken } from '../../../../core/utils/token.utils';
 
 export const MainPage = () => {
-  const token = localStorage.getItem('token');
+  const token = getToken();
 
   return (
-    <div>
+    <div style={{ padding: '2rem' }}>
       <h1 style={{ fontSize: '2rem' }}>Main Page</h1>
       <ul style={{ padding: '10px 0' }}>
         {!token ? (

@@ -4,6 +4,8 @@ import { Input } from '../../../../shared/components/input';
 import { Label } from '../../../../shared/components/label';
 import { Button } from '../../../../shared/components/button';
 import { appPaths } from '../../../../core/routing/routing.model';
+import { request } from '../../../../core/api/api.utils.js';
+import { setToken, setRole } from '../../../../core/utils/token.utils.js';
 
 export const SignUpPage = () => {
   const navigate = useNavigate();
@@ -35,43 +37,28 @@ export const SignUpPage = () => {
     console.log('Дані SignUp (Controlled):', formData);
 
     try {
-      const response = await fetch(
-        'https://study-api-volkov-lab-566b7077.koyeb.app/api/auth/register',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: formData.email,
-            password: formData.password,
-          }),
-        },
-      );
+      const data = await request('/auth/register', 'POST', {
+        email: formData.email,
+        password: formData.password,
+      });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('role', data.role);
-        console.log('Користувач успішно зареєстрований!');
+      setToken(data.token);
+      setRole(data.role);
+      console.log('Користувач успішно зареєстрований!');
 
         navigate(appPaths.user);
-        return;
-      }
-
-      if (response.status === 400) {
+      } catch (err) {
+        if (err.status === 400) {
         setError('Некоректні дані. Спробуйте ще раз.');
         return;
       }
 
-      if (response.status === 409) {
+      if (err.status === 409) {
         setError('Користувач з таким email вже існує.');
         return;
       }
-    } catch (error) {
-      setError('Помилка мережі. Спробуйте ще раз.', error);
-      console.log(error);
+      setError('Помилка мережі. Спробуйте ще раз.');
+      console.log(err);
     }
   };
 
@@ -117,7 +104,7 @@ export const SignUpPage = () => {
 
       <div className="mt-6 text-center text-sm text-gray-600">
         Вже є акаунт?{' '}
-        <Link to="/auth/sign-in" className="text-blue-600 hover:underline font-medium">
+        <Link to={`/auth/${appPaths.signIn}`} className="text-blue-600 hover:underline font-medium">
           Увійти
         </Link>
       </div>
