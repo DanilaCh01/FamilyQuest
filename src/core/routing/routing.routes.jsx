@@ -10,6 +10,7 @@ import { signUpRoute } from '../../features/auth/pages/sign-up';
 import { forgotPasswordRoute } from '../../features/auth/pages/forgot-password';
 import { userRoute } from '../../features/user/pages/user';
 import { addChildRoute } from '../../features/user/pages/add-child';
+import { familyControlRoute } from '../../features/user/pages/family-control';
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
           {
             element: <ParentRoute />,
             children: [addChildRoute],
+          },
+          {
+            element: <ParentRoute />,
+            children: [familyControlRoute],
           },
         ],
       },

@@ -32,10 +32,10 @@ export const SignInPage = () => {
     try {
       const data = await request('/auth/login', 'POST', credentials);
 
-        setToken(data.token);
-        setRole(credentials.role);
+      setToken(data.token);
+      setRole(credentials.role);
 
-        navigate(appPaths.user);
+      navigate(appPaths.user);
     } catch (err) {
       if (err.status === 400) {
         setError('Невірний запит. Перевірте введені дані.');
@@ -105,5 +105,5 @@ export const SignInPage = () => {
         </Link>
       </div>
     </div>
-  );  
+  );
 };

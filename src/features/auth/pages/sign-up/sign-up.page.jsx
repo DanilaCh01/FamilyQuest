@@ -46,9 +46,9 @@ export const SignUpPage = () => {
       setRole(data.role);
       console.log('Користувач успішно зареєстрований!');
 
-        navigate(appPaths.user);
-      } catch (err) {
-        if (err.status === 400) {
+      navigate(appPaths.user);
+    } catch (err) {
+      if (err.status === 400) {
         setError('Некоректні дані. Спробуйте ще раз.');
         return;
       }

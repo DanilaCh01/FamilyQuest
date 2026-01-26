@@ -35,10 +35,9 @@ export const AddChildPage = () => {
         email: formData.email,
         password: formData.password,
       });
-      
-        console.log('Дитину успішно додано!');
-        navigate(appPaths.user);
 
+      console.log('Дитину успішно додано!');
+      navigate(appPaths.user);
     } catch (err) {
       if (err.status === 409) {
         setError('Користувач з такою поштою вже існує.');

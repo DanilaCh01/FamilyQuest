@@ -33,31 +33,31 @@ export const App = () => {
             </Link>
           ) : (
             <>
-            <Link
-              to={appPaths.user}
-              style={{
-                color: 'white',
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-              }}
-            >
-              <span>Профіль</span>
-              <img
-                src="https://ui-avatars.com/api/?name=User&background=random&color=fff&rounded=true"
-                alt="Avatar"
+              <Link
+                to={appPaths.user}
                 style={{
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '50%',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
-                  border: '1.5px solid rgba(0, 0, 0, 0.1)',
+                  color: 'white',
+                  textDecoration: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
                 }}
-              />
-            </Link>
+              >
+                <span>Профіль</span>
+                <img
+                  src="https://ui-avatars.com/api/?name=User&background=random&color=fff&rounded=true"
+                  alt="Avatar"
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+                    border: '1.5px solid rgba(0, 0, 0, 0.1)',
+                  }}
+                />
+              </Link>
 
-            <button
+              <button
                 onClick={handleLogout}
                 style={{
                   background: 'transparent',
@@ -71,7 +71,7 @@ export const App = () => {
               >
                 Вийти
               </button>
-              </>
+            </>
           )}
         </nav>
       </header>

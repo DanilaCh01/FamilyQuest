@@ -5,4 +5,5 @@ export const appPaths = {
   forgotPassword: 'forgot-password',
   user: '/user',
   addChild: '/user/add-child',
+  familyControl: '/user/family-control',
 };

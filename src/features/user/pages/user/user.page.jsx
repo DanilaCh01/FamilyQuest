@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { clearAuthData } from '../../../../core/utils/token.utils.js';
 import { request } from '../../../../core/api/api.utils.js';
-import { ParentView } from '../../components/parent-view/parent-view.component.jsx'
+import { ParentView } from '../../components/parent-view/parent-view.component.jsx';
 import { ChildView } from '../../components/child-view/child-view.component.jsx';
 import { appPaths } from '../../../../core/routing/routing.model';
 
@@ -14,7 +14,7 @@ export const UserPage = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const data = await request('/users'); 
+        const data = await request('/users');
         setUserData(data);
       } catch (err) {
         if (err.status === 401) {
@@ -34,15 +34,17 @@ export const UserPage = () => {
 
     fetchUserData();
 
-    return () => {
-    };
+    return () => {};
   }, [navigate]);
 
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
         <div className="text-red-500 text-lg mb-4">{error}</div>
-        <button onClick={() => navigate(`/auth/${appPaths.signIn}`)} className="text-blue-600 underline">
+        <button
+          onClick={() => navigate(`/auth/${appPaths.signIn}`)}
+          className="text-blue-600 underline"
+        >
           Повернутися до входу
         </button>
       </div>
