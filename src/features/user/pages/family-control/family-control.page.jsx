@@ -14,28 +14,31 @@ export const FamilyControlPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [nameInput, setNameInput] = useState('');
 
-  useEffect(() => {
-    const loadAllData = async () => {
-      try {
-        const [profile, balances, goals] = await Promise.all([
-          request('/family/profile'),
-          request('/family/points/balances'),
-          request('/family/goals'),
-        ]);
-        setFamilyData({
-          profile,
-          children: balances,
-          goals,
-        });
-        setNameInput(profile.name || '');
-      } catch (error) {
-        console.error("Помилка завантаження даних сім'ї:", error);
-      } finally {
-        setLoading(false);
+  const fetchFamilyData = async (isFirstLoad = false) => {
+    try {
+      if (isFirstLoad) {
+        setLoading(true);
       }
-    };
+      const [profile, balances, goals] = await Promise.all([
+        request('/family/profile'),
+        request('/family/points/balances'),
+        request('/family/goals'),
+      ]);
+      setFamilyData({
+        profile,
+        children: balances,
+        goals,
+      });
+      if (isFirstLoad) setNameInput(profile.name || '');
+    } catch (error) {
+      console.error("Помилка завантаження данных сім'ї:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    loadAllData();
+  useEffect(() => {
+    fetchFamilyData(true);
   }, []);
 
   const handleEditClick = async () => {
@@ -52,15 +55,6 @@ export const FamilyControlPage = () => {
       }
     }
     setIsEditing(!isEditing);
-  };
-
-  const refreshData = async () => {
-    const [profile, balances, goals] = await Promise.all([
-      request('/family/profile'),
-      request('/family/points/balances'),
-      request('/family/goals'),
-    ]);
-    setFamilyData({ profile, children: balances, goals });
   };
 
   if (loading)
@@ -99,11 +93,11 @@ export const FamilyControlPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-          <ChildrenManager children={familyData.children} onRefresh={refreshData} />
+          <ChildrenManager children={familyData.children} onRefresh={fetchFamilyData} />
         </section>
 
         <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-          <GoalsManager goals={familyData.goals} onRefresh={refreshData} />
+          <GoalsManager goals={familyData.goals} onRefresh={fetchFamilyData} />
         </section>
       </div>
     </div>

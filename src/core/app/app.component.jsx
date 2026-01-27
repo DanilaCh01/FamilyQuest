@@ -1,10 +1,25 @@
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { appPaths } from '../routing/routing.model';
 import { clearAuthData, getToken } from '../utils/token.utils';
+import { request } from '../api/api.utils.js'; // Тимчасовий функціонал
+import { setToken, setRole } from '../utils/token.utils'; // Тимчасовий функціонал
 
 export const App = () => {
   const navigate = useNavigate();
   const token = getToken();
+
+  const handleQuickLogin = async (email, password, role) => {
+    // Тимчасовий функціонал (для швидкого тестування)
+    try {
+      const data = await request('/auth/login', 'POST', { email, password, role });
+      setToken(data.token);
+      setRole(data.role);
+      window.location.href = `/user`;
+    } catch (err) {
+      console.error('Quick login failed:', err);
+      alert('Швидкий вхід не вдався');
+    }
+  };
 
   const handleLogout = () => {
     clearAuthData();
@@ -27,6 +42,25 @@ export const App = () => {
           <Link to={`${appPaths.main}`}>FamilyQuest</Link>
         </strong>
         <nav style={{ display: 'flex', gap: '1rem' }}>
+          {/* Тимчасово + */}
+          {!token && (
+            <div className="flex gap-2 border-r border-blue-400 pr-4 mr-2">
+              <button
+                onClick={() => handleQuickLogin('user1234@example.com', '1234', 'parent')}
+                className="text-[10px] bg-blue-800 px-2 py-1 rounded hover:bg-blue-900"
+              >
+                Dev: Parent
+              </button>
+              <button
+                onClick={() => handleQuickLogin('user12345@example.com', '12345', 'child')}
+                className="text-[10px] bg-green-800 px-2 py-1 rounded hover:bg-green-900"
+              >
+                Dev: Child
+              </button>
+            </div>
+          )}
+          {/* Тимчасово - */}
+
           {!token ? (
             <Link to={`/auth/${appPaths.signIn}`} style={{ color: 'white' }}>
               Увійти

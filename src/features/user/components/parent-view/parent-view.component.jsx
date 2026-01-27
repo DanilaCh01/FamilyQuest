@@ -24,5 +24,13 @@ export const ParentView = ({ childrenList }) => (
         + Додати дитину
       </Link>
     </div>
+    <div className="mt-6 pt-6">
+      <Link
+        to={appPaths.familyControl}
+        className="block text-center bg-blue-700 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-800 transition shadow-md"
+      >
+        Керування сім'єю
+      </Link>
+    </div>
   </div>
 );

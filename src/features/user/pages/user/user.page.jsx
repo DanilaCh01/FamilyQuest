@@ -14,8 +14,22 @@ export const UserPage = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const data = await request('/users');
-        setUserData(data);
+        const user = await request('/users');
+
+        if (user.role === 'child') {
+          const [pointsData, goalsData] = await Promise.all([
+            request('/family/points/me'),
+            request('/family/goals'),
+          ]);
+
+          setUserData({
+            ...user,
+            balance: pointsData.balance,
+            goals: goalsData,
+          });
+        } else {
+          setUserData(user);
+        }
       } catch (err) {
         if (err.status === 401) {
           setError('Помилка авторизації.');
@@ -33,8 +47,6 @@ export const UserPage = () => {
     };
 
     fetchUserData();
-
-    return () => {};
   }, [navigate]);
 
   if (error) {
@@ -70,7 +82,7 @@ export const UserPage = () => {
             {userData.role === 'parent' ? (
               <ParentView childrenList={userData.children} />
             ) : (
-              <ChildView />
+              <ChildView balance={userData.balance} goals={userData.goals} />
             )}
           </div>
         ) : (
