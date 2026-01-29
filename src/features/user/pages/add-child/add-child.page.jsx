@@ -11,6 +11,7 @@ export const AddChildPage = () => {
   const navigate = useNavigate();
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -32,6 +33,7 @@ export const AddChildPage = () => {
 
     try {
       await request('/users/children', 'POST', {
+        name: formData.name,
         email: formData.email,
         password: formData.password,
       });
@@ -42,7 +44,7 @@ export const AddChildPage = () => {
       if (err.status === 409) {
         setError('Користувач з такою поштою вже існує.');
       } else if (err.status === 400) {
-        setError('Некоректні дані. Перевірте формат пошти та вимоги до паролю'); // Хоча поки що вимог до паролю немає. Залишив на майбутнє.
+        setError("Некоректні дані. Перевірте ім'я, формат пошти та пароль"); // Хоча поки що вимог до паролю немає. Залишив на майбутнє.
       } else if (err.status === 401 || err.status === 403) {
         clearAuthData();
         navigate(`/auth/${appPaths.signIn}`);
@@ -61,6 +63,18 @@ export const AddChildPage = () => {
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <Label text="Ім'я дитини" />
+            <Input
+              name="name"
+              type="text"
+              required
+              placeholder="Введіть ім'я"
+              value={formData.name}
+              onChange={handleChange}
+            />
+          </div>
+
           <div>
             <Label text="Email дитини" />
             <Input

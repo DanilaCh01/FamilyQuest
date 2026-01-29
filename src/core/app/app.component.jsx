@@ -46,13 +46,13 @@ export const App = () => {
           {!token && (
             <div className="flex gap-2 border-r border-blue-400 pr-4 mr-2">
               <button
-                onClick={() => handleQuickLogin('user1234@example.com', '1234', 'parent')}
+                onClick={() => handleQuickLogin('1user@example.com', '1', 'parent')}
                 className="text-[10px] bg-blue-800 px-2 py-1 rounded hover:bg-blue-900"
               >
                 Dev: Parent
               </button>
               <button
-                onClick={() => handleQuickLogin('user12345@example.com', '12345', 'child')}
+                onClick={() => handleQuickLogin('1max@example.com', '1', 'child')}
                 className="text-[10px] bg-green-800 px-2 py-1 rounded hover:bg-green-900"
               >
                 Dev: Child

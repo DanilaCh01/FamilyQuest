@@ -6,7 +6,7 @@ export const ChildView = ({ balance, goals }) => (
     </div>
 
     <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-      <h3 className="text-xl font-bold mb-4 text-gray-800">Цілі сім'ї</h3>
+      <h3 className="text-xl font-bold mb-4 text-gray-800">Мої цілі</h3>
       <ul className="space-y-3">
         {goals?.map((goal) => (
           <li key={goal.id} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">

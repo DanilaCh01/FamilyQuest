@@ -7,11 +7,9 @@ export const ParentView = ({ childrenList }) => (
     <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
       <p className="font-semibold mb-2">Ваші діти:</p>
       {childrenList?.length > 0 ? (
-        <ul className="list-disc pl-5 space-y-1">
-          {childrenList.map((email) => (
-            <li key={email} className="text-gray-700">
-              {email}
-            </li>
+        <ul className="list-disc pl-5 text-blue-900">
+          {childrenList?.map((child) => (
+            <li key={child.email}>{child.name || child.email}</li>
           ))}
         </ul>
       ) : (

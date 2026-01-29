@@ -14,31 +14,52 @@ export const FamilyControlPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [nameInput, setNameInput] = useState('');
 
-  const fetchFamilyData = async (isFirstLoad = false) => {
+  const fetchFamilyData = async () => {
+    let childrenNames = {};
+
     try {
-      if (isFirstLoad) {
-        setLoading(true);
-      }
-      const [profile, balances, goals] = await Promise.all([
-        request('/family/profile'),
-        request('/family/points/balances'),
-        request('/family/goals'),
-      ]);
-      setFamilyData({
-        profile,
-        children: balances,
-        goals,
+      const userData = await request('/users');
+      userData.children?.forEach((child) => {
+        childrenNames[child.email] = child.name;
       });
-      if (isFirstLoad) setNameInput(profile.name || '');
-    } catch (error) {
-      console.error("Помилка завантаження данных сім'ї:", error);
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      console.error('Помилка завантаження імен дітей:', err);
     }
+
+    try {
+      const profile = await request('/family/profile');
+      setFamilyData((prev) => ({ ...prev, profile }));
+      setNameInput(profile.name || '');
+    } catch (err) {
+      console.error('Помилка завантаження профілю:', err);
+    }
+
+    try {
+      const balances = await request('/family/points/balances');
+      const balancesWithNames = balances.map((child) => ({
+        ...child,
+        name: childrenNames[child.childEmail] || child.name || '',
+      }));
+
+      setFamilyData((prev) => ({ ...prev, children: balancesWithNames }));
+    } catch (err) {
+      console.error('Помилка завантаження балансів:', err);
+    }
+
+    try {
+      const goals = await request('/family/goals');
+      setFamilyData((prev) => ({ ...prev, goals }));
+    } catch (err) {
+      console.error('Помилка завантаження цілей:', err);
+    }
+
+    setLoading(false);
   };
 
   useEffect(() => {
-    fetchFamilyData(true);
+    (async () => {
+      await fetchFamilyData();
+    })();
   }, []);
 
   const handleEditClick = async () => {
@@ -97,7 +118,11 @@ export const FamilyControlPage = () => {
         </section>
 
         <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-          <GoalsManager goals={familyData.goals} onRefresh={fetchFamilyData} />
+          <GoalsManager
+            goals={familyData.goals}
+            childrenList={familyData.children}
+            onRefresh={fetchFamilyData}
+          />
         </section>
       </div>
     </div>
