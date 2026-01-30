@@ -6,6 +6,22 @@ export const GoalsManager = ({ goals, childrenList, onRefresh }) => {
   const [editingGoalId, setEditingGoalId] = useState(null);
   const [goalForm, setGoalForm] = useState({ title: '', points: '', childEmail: '' });
 
+  const createGoal = async () => {
+    await request('/family/goals', 'POST', {
+      title: goalForm.title,
+      points: Number(goalForm.points),
+      childEmail: goalForm.childEmail,
+    });
+  };
+
+  const updateGoal = async (id) => {
+    await request(`/family/goals/${id}`, 'PUT', {
+      title: goalForm.title,
+      points: Number(goalForm.points),
+      childEmail: goalForm.childEmail,
+    });
+  };
+
   const handleDelete = async (id) => {
     if (!window.confirm('Видалити цю ціль?')) return;
     try {
@@ -17,6 +33,25 @@ export const GoalsManager = ({ goals, childrenList, onRefresh }) => {
     }
   };
 
+  const handleSave = async () => {
+    if (!goalForm.title || !goalForm.points || !goalForm.childEmail) {
+      return alert('Заповніть всі поля та оберіть дитину');
+    }
+
+    try {
+      if (editingGoalId) {
+        await updateGoal(editingGoalId);
+      } else {
+        await createGoal();
+      }
+      cancelAction();
+      onRefresh();
+    } catch (error) {
+      console.error('Помилка при збереженні цілі:', error);
+      alert('Помилка при збереженні');
+    }
+  };
+
   const startEdit = (goal) => {
     setEditingGoalId(goal.id);
     setGoalForm({
@@ -25,29 +60,6 @@ export const GoalsManager = ({ goals, childrenList, onRefresh }) => {
       childEmail: goal.childEmail || '',
     });
     setIsAdding(false);
-  };
-
-  const handleSave = async () => {
-    if (!goalForm.title || !goalForm.points || !goalForm.childEmail)
-      return alert('Заповніть всі поля та оберіть дитину');
-
-    const isEdit = !!editingGoalId;
-    const url = isEdit ? `/family/goals/${editingGoalId}` : '/family/goals';
-    const method = isEdit ? 'PUT' : 'POST';
-
-    try {
-      await request(url, method, {
-        title: goalForm.title,
-        points: Number(goalForm.points),
-        childEmail: goalForm.childEmail,
-      });
-
-      cancelAction();
-      onRefresh();
-    } catch (error) {
-      console.error('Помилка при збереженні цілі:', error);
-      alert('Помилка при збереженні');
-    }
   };
 
   const cancelAction = () => {
