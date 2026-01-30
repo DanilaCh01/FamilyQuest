@@ -1,0 +1,1 @@
+import{j as o,L as r}from"./index-DSzY9glm.js";const s=()=>o.jsxs("div",{children:[o.jsx("h1",{style:{fontSize:"2rem"},children:"Forgot Password Page"}),o.jsx(r,{to:"/",style:{color:"blue"},children:"Return to Main page"})]});export{s as ForgotPasswordPage};
