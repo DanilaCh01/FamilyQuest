@@ -46,4 +46,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
-]);
+],
+{ 
+    basename: "/FamilyQuest" 
+  });
