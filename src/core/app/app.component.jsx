@@ -14,7 +14,7 @@ export const App = () => {
       const data = await request('/auth/login', 'POST', { email, password, role });
       setToken(data.token);
       setRole(data.role);
-      window.location.href = `/user`;
+      navigate(appPaths.user);
     } catch (err) {
       console.error('Quick login failed:', err);
       alert('Швидкий вхід не вдався');
@@ -31,8 +31,8 @@ export const App = () => {
       <header
         style={{
           padding: '1rem 2rem',
-          backgroundColor: 'var(--color-blue-700)',
-          color: 'white',
+          backgroundColor: 'var(--color-header-bg)',
+          color: 'var(--color-secondary-text)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -44,7 +44,7 @@ export const App = () => {
         <nav style={{ display: 'flex', gap: '1rem' }}>
           {/* Тимчасово + */}
           {!token && (
-            <div className="flex gap-2 border-r border-blue-400 pr-4 mr-2">
+            <div className="flex gap-2 border-r border-secondary-text pr-4 mr-2">
               <button
                 onClick={() => handleQuickLogin('1user@example.com', '1', 'parent')}
                 className="text-[10px] bg-blue-800 px-2 py-1 rounded hover:bg-blue-900"
@@ -62,7 +62,7 @@ export const App = () => {
           {/* Тимчасово - */}
 
           {!token ? (
-            <Link to={`/auth/${appPaths.signIn}`} style={{ color: 'white' }}>
+            <Link to={`/auth/${appPaths.signIn}`} style={{ color: 'var(--color-secondary-text)' }}>
               Увійти
             </Link>
           ) : (
@@ -70,7 +70,7 @@ export const App = () => {
               <Link
                 to={appPaths.user}
                 style={{
-                  color: 'white',
+                  color: 'var(--color-secondary-text)',
                   textDecoration: 'none',
                   display: 'flex',
                   alignItems: 'center',
@@ -96,7 +96,7 @@ export const App = () => {
                 style={{
                   background: 'transparent',
                   border: '1px solid rgba(255, 255, 255, 0.5)',
-                  color: 'white',
+                  color: 'var(--color-secondary-text)',
                   padding: '4px 12px',
                   borderRadius: '6px',
                   cursor: 'pointer',

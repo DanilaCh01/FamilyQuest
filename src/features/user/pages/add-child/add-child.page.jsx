@@ -56,9 +56,9 @@ export const AddChildPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh]">
-      <div className="w-full max-w-sm bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-        <h2 className="text-2xl font-bold text-gray-800 text-center mb-2">Додати дитину</h2>
-        <p className="text-sm text-gray-500 text-center mb-6">
+      <div className="w-full max-w-sm bg-surface p-8 rounded-2xl shadow-lg border border-border-subtle">
+        <h2 className="text-2xl font-bold text-accent text-center mb-2">Додати дитину</h2>
+        <p className="text-sm text-text-muted text-center mb-6">
           Створіть аккаунт для вашої дитини, щоб вона могла отримувати завдання.
         </p>
 
@@ -110,7 +110,7 @@ export const AddChildPage = () => {
 
           {error && <p className="text-red-500 text-sm text-center font-medium">{error}</p>}
 
-          <Button text="Зареєструвати дитину" />
+          <Button>Зареєструвати дитину</Button>
         </form>
 
         <button

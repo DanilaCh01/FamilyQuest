@@ -19,7 +19,7 @@ export const Input = ({ type, name, value, required, onChange, placeholder }) =>
       type={type}
       required={required}
       placeholder={getPlaceholder()}
-      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+      className="w-full px-3 py-2 text-accent border border-border-subtle rounded-md shadow-sm shadow-border-subtle focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
       value={value}
       onChange={onChange}
     />

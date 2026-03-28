@@ -71,11 +71,11 @@ export const GoalsManager = ({ goals, childrenList, onRefresh }) => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h3 className="text-xl font-bold text-gray-800">Цілі сім'ї</h3>
+        <h3 className="text-xl font-bold text-main-text">Цілі сім'ї</h3>
         {!isAdding && !editingGoalId && (
           <button
             onClick={() => setIsAdding(true)}
-            className="text-blue-600 font-bold hover:underline"
+            className="text-royal-blue font-bold hover:underline"
           >
             + Додати
           </button>
@@ -83,8 +83,8 @@ export const GoalsManager = ({ goals, childrenList, onRefresh }) => {
       </div>
 
       {(isAdding || editingGoalId) && (
-        <div className="bg-blue-50 p-4 rounded-xl space-y-3 border border-blue-100 shadow-inner">
-          <p className="text-xs font-bold text-blue-400 uppercase">
+        <div className="bg-primary/10 p-4 rounded-xl space-y-3 border border-border-subtle shadow-inner">
+          <p className="text-xs font-bold text-primary uppercase">
             {editingGoalId ? 'Редагування цілі' : 'Нова ціль'}
           </p>
           <input
@@ -101,7 +101,7 @@ export const GoalsManager = ({ goals, childrenList, onRefresh }) => {
             onChange={(e) => setGoalForm({ ...goalForm, points: e.target.value })}
           />
           <select
-            className="w-full p-2 rounded border bg-white"
+            className="w-full p-2 rounded border bg-surface"
             value={goalForm.childEmail}
             onChange={(e) => setGoalForm({ ...goalForm, childEmail: e.target.value })}
           >
@@ -115,11 +115,11 @@ export const GoalsManager = ({ goals, childrenList, onRefresh }) => {
           <div className="flex gap-2">
             <button
               onClick={handleSave}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold"
+              className="bg-royal-blue/85 text-secondary-text px-4 py-2 rounded-lg text-sm font-bold hover:bg-royal-blue"
             >
               Зберегти
             </button>
-            <button onClick={cancelAction} className="text-gray-500 text-sm">
+            <button onClick={cancelAction} className="text-btn-neutral-text text-sm hover:text-text-muted">
               Скасувати
             </button>
           </div>
@@ -130,24 +130,24 @@ export const GoalsManager = ({ goals, childrenList, onRefresh }) => {
         {goals.map((goal) => (
           <li
             key={goal.id}
-            className="flex justify-between p-3 bg-white border rounded-lg shadow-sm group"
+            className="flex justify-between p-3 bg-surface border border-accent/30 rounded-lg shadow-md group"
           >
             <div className="flex flex-col">
-              <span className="font-medium">{goal.title}</span>
-              <span className="text-[10px] text-gray-400 italic">Для: {goal.childEmail}</span>{' '}
+              <span className="font-medium text-accent brightness-75">{goal.title}</span>
+              <span className="text-[10px] text-text-muted italic">Для: {goal.childEmail}</span>{' '}
             </div>
             <div className="flex items-center gap-4">
-              <span className="font-bold text-blue-600">{goal.points} ★</span>
+              <span className="font-bold text-royal-blue">{goal.points} ★</span>
               <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
                   onClick={() => startEdit(goal)}
-                  className="text-gray-400 hover:text-blue-500 mr-2"
+                  className="text-btn-neutral-text hover:text-primary mr-2"
                 >
                   edit
                 </button>
                 <button
                   onClick={() => handleDelete(goal.id)}
-                  className="text-gray-400 hover:text-red-500"
+                  className="text-btn-neutral-text hover:text-danger"
                 >
                   ✕
                 </button>

@@ -64,18 +64,18 @@ export const UserPage = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 text-gray-800 p-4">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-900">Мій Профіль</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-page-bg text-main-text p-4">
+      <div className="w-full max-w-md bg-surface p-8 rounded-2xl shadow-xl border border-border-subtle">
+        <h1 className="text-3xl font-bold mb-6 text-center text-accent">Мій Профіль</h1>
 
         {userData ? (
           <div className="space-y-2">
-            <div className="pb-4 border-b border-gray-100">
-              <p className="text-lg text-black font-medium">
-                Email: <span className="text-blue-600">{userData.email}</span>
+            <div className="pb-4 border-b border-border-base">
+              <p className="text-lg text-main-text font-medium">
+                Email: <span className="text-royal-blue">{userData.email}</span>
               </p>
-              <p className="text-sm text-black font-bold">
-                Роль: <span className="text-blue-600">{userData.role}</span>
+              <p className="text-sm text-main-text font-bold">
+                Роль: <span className="text-royal-blue">{userData.role}</span>
               </p>
             </div>
 

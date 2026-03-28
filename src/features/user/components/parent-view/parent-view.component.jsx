@@ -1,34 +1,37 @@
 import { Link } from 'react-router-dom';
 import { appPaths } from '../../../../core/routing/routing.model';
+import { Button } from '../../../../shared/components/button'
 
 export const ParentView = ({ childrenList }) => (
   <div className="mt-6 w-full">
-    <h3 className="text-xl font-bold mb-3 text-blue-700">Панель батьків</h3>
-    <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+    <h3 className="text-xl font-bold mb-3 text-main-text">Панель батьків</h3>
+    <div className="bg-ivory-bg p-4 rounded-lg border border-border-base">
       <p className="font-semibold mb-2">Ваші діти:</p>
       {childrenList?.length > 0 ? (
-        <ul className="list-disc pl-5 text-blue-900">
+        <ul className="list-disc pl-5 text-accent">
           {childrenList?.map((child) => (
             <li key={child.email}>{child.name || child.email}</li>
           ))}
         </ul>
       ) : (
-        <p className="text-gray-500 italic">Ви ще не додали дітей.</p>
+        <p className="text-muted italic">Ви ще не додали дітей.</p>
       )}
-      <Link
+      <Button Tag={Link}
         to={appPaths.addChild}
-        className="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+        variant='secondary'
+        className="mt-3 shadow-sm border border-border-base"
       >
         + Додати дитину
-      </Link>
+      </Button>
     </div>
     <div className="mt-6 pt-6">
-      <Link
+      <Button
+        Tag={Link}
         to={appPaths.familyControl}
-        className="block text-center bg-blue-700 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-800 transition shadow-md"
+        className="px-6 py-3 rounded-xl hover:bg-blue-500! transition shadow-md"
       >
         Керування сім'єю
-      </Link>
+      </Button>
     </div>
   </div>
 );

@@ -9,13 +9,14 @@ export const AuthLayout = () => {
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: '100vh',
-        backgroundColor: '#f3f4f6',
+        backgroundColor: 'var(--color-page-bg)',
       }}
     >
       <div
         style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--color-surface)',
           padding: '2rem',
+          border: 'solid 1px var(--color-border-subtle)',
           borderRadius: '12px',
           boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
           width: '100%',

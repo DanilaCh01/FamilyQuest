@@ -1,1 +1,51 @@
 @import 'tailwindcss';
+
+@theme {
+  --color-brand-blue: #4f9cf9;
+  --color-brand-yellow: #ffe492;
+  --color-royal-blue: #1c5eff;
+  --color-dark-navy: #043873;
+
+  --color-primary: var(--color-brand-blue);
+  --color-secondary: var(--color-brand-yellow);
+  --color-accent: var(--color-dark-navy);
+  --color-page-bg: #f3f4f6;
+  --color-surface: #ffffff;
+  --color-main-text: #212529;
+  --color-secondary-text: #ffffff;
+  --color-border-subtle: #0039ff1c;
+
+  --color-btn-main-bg: var(--color-primary);
+  --color-btn-alt-bg: var(--color-secondary);
+  --color-btn-main-text: #ffffff;
+  --color-btn-alt-text: #212529;
+
+  --color-header-bg: var(--color-royal-blue);
+  --color-header-text: #ffffff;
+
+  --color-ivory-bg: #f7f7ee;
+
+  --color-success: #22c55e;
+    /* Зелений для кнопок "+" */
+
+    --color-danger: #ef4444;
+    /* Червоний для кнопок "-" та видалення */
+
+    --color-warning: #f59e0b;
+    /* Про всяк випадок для важливих зауважень (not used) */
+  
+
+    /* Функціональні сірі */
+
+    --color-text-muted: #6b7280;
+    /* Сірий текст для email та другорядної інфо */
+
+    --color-border-base: #e5e7eb;
+    /* Стандартний колір обводки інпутів/карток */
+
+    --color-bg-soft: #f9fafb;
+    /* Дуже світлий сірий для фону інпутів */
+  
+    /* Специфічні (наприклад, для кнопок "Скасувати") */
+    --color-btn-neutral-text: #9ca3af;
+}

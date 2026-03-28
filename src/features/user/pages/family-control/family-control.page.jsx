@@ -82,20 +82,20 @@ export const FamilyControlPage = () => {
     return <p className="text-center mt-10 animate-pulse">Завантаження панелі керування...</p>;
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-8">
-      <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-        <h2 className="text-2xl font-bold text-gray-800">
+    <div className="max-w-6xl mx-auto p-6 space-y-8 bg-page-bg rounded-b-4xl">
+      <section className="bg-surface p-6 rounded-2xl shadow-sm border border-border-subtle">
+        <h2 className="text-2xl font-bold text-main-text">
           Сім'я:{' '}
           {isEditing ? (
             <input
               type="text"
-              className="border-b-2 border-blue-500 outline-none px-2 py-1 font-medium"
+              className="border-b-2 border-border-subtle outline-none px-2 py-1 font-medium"
               value={nameInput}
               onChange={(event) => setNameInput(event.target.value)}
               autoFocus
             />
           ) : (
-            <span className="text-blue-600">
+            <span className="text-primary">
               {familyData.profile?.name || 'Назва не встановлена'}
             </span>
           )}
@@ -104,8 +104,8 @@ export const FamilyControlPage = () => {
           onClick={handleEditClick}
           className={`px-4 py-2 mt-2 rounded-lg font-semibold transition ${
             isEditing
-              ? 'bg-green-500 text-white hover:bg-green-600'
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              ? 'bg-success text-secondary-text hover:bg-success hover:brightness-105'
+              : 'bg-bg-soft border border-border-base text-text-muted hover:bg-bg-soft hover:brightness-90'
           }`}
         >
           {isEditing ? 'Зберегти' : 'Редагувати'}
@@ -113,11 +113,11 @@ export const FamilyControlPage = () => {
       </section>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <section className="bg-surface p-6 rounded-2xl shadow-sm border border-border-subtle">
           <ChildrenManager children={familyData.children} onRefresh={fetchFamilyData} />
         </section>
 
-        <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <section className="bg-surface p-6 rounded-2xl shadow-sm border border-border-subtle">
           <GoalsManager
             goals={familyData.goals}
             childrenList={familyData.children}

@@ -18,10 +18,7 @@ export const SignUpPage = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = async (event) => {
@@ -64,7 +61,7 @@ export const SignUpPage = () => {
 
   return (
     <div className="w-full max-w-sm">
-      <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Створити акаунт</h2>
+      <h2 className="text-2xl font-bold text-accent text-center mb-6">Створити акаунт</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -99,12 +96,15 @@ export const SignUpPage = () => {
         </div>
         {error && <p className="text-red-500 text-sm text-center">{error}</p>}{' '}
         {/* might be deleted */}
-        <Button text="Зареєструватися" />
+        <Button>Зареєструватися</Button>
       </form>
 
-      <div className="mt-6 text-center text-sm text-gray-600">
-        Вже є акаунт?{' '}
-        <Link to={`/auth/${appPaths.signIn}`} className="text-blue-600 hover:underline font-medium">
+      <div className="mt-6 text-sm w-fit flex gap-2 flex-row justify-self-center self-center whitespace-nowrap">
+        <p className="text-main-text opacity-80">Вже є акаунт?</p>
+        <Link
+          to={`/auth/${appPaths.signIn}`}
+          className="text-primary brightness-85 saturate-150 hover:underline font-medium"
+        >
           Увійти
         </Link>
       </div>

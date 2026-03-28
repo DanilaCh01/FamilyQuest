@@ -50,11 +50,11 @@ export const ChildrenManager = ({ children, onRefresh }) => {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-xl font-bold mb-4">Керування балами</h3>
+      <h3 className="text-xl font-bold mb-4 text-main-text">Керування балами</h3>
       {children.map((child) => (
         <div
           key={child.childEmail}
-          className="flex flex-col p-4 bg-gray-50 rounded-xl border border-gray-100"
+          className="flex flex-col p-4 bg-page-bg/70 rounded-xl border border-border-subtle/70"
         >
           <div className="flex justify-between mb-3">
             <div>
@@ -68,57 +68,57 @@ export const ChildrenManager = ({ children, onRefresh }) => {
                   />
                   <button
                     onClick={() => handleRename(child.childEmail)}
-                    className="text-green-600 text-xs font-bold"
+                    className="text-success/85 saturate-85 text-xs font-bold hover:text-success hover:saturate-110 hover:brightness-85"
                   >
                     ОК
                   </button>
-                  <button onClick={() => setEditingEmail(null)} className="text-gray-400 text-xs">
+                  <button onClick={() => setEditingEmail(null)} className="text-btn-neutral-text text-xs hover:text-text-muted">
                     Скасувати
                   </button>
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
-                  <span className="font-bold">{child.name || child.childEmail}</span>
+                  <span className="font-bold text-accent">{child.name || child.childEmail}</span>
                   <button
                     onClick={() => {
                       setEditingEmail(child.childEmail);
                       setNewName(child.name || '');
                     }}
-                    className="text-gray-400 hover:text-blue-500 text-xs"
+                    className="text-btn-neutral-text hover:text-primary text-xs"
                   >
                     edit
                   </button>
                 </div>
               )}
-              <p className="text-xs text-gray-400">{child.childEmail}</p>
+              <p className="text-xs text-text-muted">{child.childEmail}</p>
             </div>
             <button
               onClick={() => handleDelete(child.childEmail)}
-              className="text-red-300 hover:text-red-500 text-xs"
+              className="text-xs text-danger/70 hover:text-danger hover:saturate-120"
             >
               Видалити
             </button>
           </div>
 
-          <span className="font-bold text-blue-600 text-sm mb-3">{child.balance} ★</span>
+          <span className="font-bold text-royal-blue text-sm mb-3">{child.balance} ★</span>
 
           <div className="flex gap-2">
             <input
               type="number"
               placeholder="Сума"
-              className="flex-1 p-2 rounded border outline-none focus:ring-2 focus:ring-blue-400"
+              className="flex-1 p-2 rounded text-text-muted border outline-none focus:ring-3 focus:ring-border-subtle"
               value={inputs[child.childEmail] || ''}
               onChange={(event) => setInputs({ ...inputs, [child.childEmail]: event.target.value })}
             />
             <button
               onClick={() => handleUpdate(child.childEmail, 'award')}
-              className="px-4 py-2 bg-green-500 text-white rounded-lg font-bold hover:bg-green-600"
+              className="px-4 py-2 bg-success text-secondary-text rounded-lg font-bold hover:bg-success hover:brightness-90"
             >
               +
             </button>
             <button
               onClick={() => handleUpdate(child.childEmail, 'deduct')}
-              className="px-[18px] py-2 bg-red-500 text-white rounded-lg font-bold hover:bg-red-600"
+              className="px-4.5 py-2 bg-danger text-secondary-text rounded-lg font-bold hover:bg-danger hover:brightness-90"
             >
               -
             </button>

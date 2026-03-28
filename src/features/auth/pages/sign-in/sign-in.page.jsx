@@ -50,7 +50,7 @@ export const SignInPage = () => {
 
   return (
     <div className="w-full max-w-sm">
-      <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Увійти у FamilyQuest</h2>
+      <h2 className="text-2xl font-bold text-accent text-center mb-6">Увійти у FamilyQuest</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -82,27 +82,37 @@ export const SignInPage = () => {
             name="role"
             value={credentials.role}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-2 border-2 text-accent border-border-subtle brightness-75 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
           >
-            <option value="parent">Батько/Мати</option>
-            <option value="child">Дитина</option>
+            <option value="parent" className="bg-primary/10 text-accent">
+              Батько/Мати
+            </option>
+            <option value="child" className="bg-primary/10 text-accent ">
+              Дитина
+            </option>
           </select>
         </div>
 
-        <Button text="Увійти" />
+        <Button>Увійти</Button>
       </form>
 
-      <div className="mt-6 text-center text-sm text-gray-600">
+      <div className="mt-6 text-center text-sm text-main-text">
         <Link
           to={`/auth/${appPaths.forgotPassword}`}
-          className="block text-blue-800 mb-3 hover:underline font-medium"
+          className="block text-primary brightness-60 saturate-150 mb-3 hover:underline font-medium"
         >
           Забули пароль?
         </Link>
-        {'Нема аккаунту? '}
-        <Link to={`/auth/${appPaths.signUp}`} className="text-blue-600 hover:underline font-medium">
-          Зареєструватися
-        </Link>
+        <div className="w-fit flex gap-2 flex-row justify-self-center self-center whitespace-nowrap">
+          <p className="text-main-text opacity-80">Нема акаунту?</p>
+          {/* {'Нема аккаунту? '} */}
+          <Link
+            to={`/auth/${appPaths.signUp}`}
+            className="text-primary brightness-85 saturate-150 hover:underline font-medium"
+          >
+            Зареєструватися
+          </Link>
+        </div>
       </div>
     </div>
   );
